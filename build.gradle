@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'java'
+    id 'jvm-test-suite'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/test/java'
+        }
+        resources {
+            srcDir 'src/test/resources'
+        }
+    }
+}
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.platform:junit-platform-suite:1.9.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
+    testImplementation 'org.junit.platform:junit-platform-suite-engine:1.9.0'
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines "junit-jupiter"
+        excludeEngines "junit-vintage"
+        testClassesDirs = testing.suites.test.sources.output.classesDirs
+        classpath = testing.suites.test.sources.runtimeClasspath
+    }
+}
