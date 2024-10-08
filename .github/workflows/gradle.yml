@@ -29,9 +29,21 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew test
 
+  approve:
+    if: github.ref == 'refs/heads/main'
+    name: Approve Step
+    needs: build
+    environment:
+      name: dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: manual approve
+        run: |
+          echo "Manually approved"
+
   integration-tests:
     name: Run Integration Tests
-    needs: build
+    needs: approve
     runs-on: ubuntu-latest
     permissions:
       contents: read
