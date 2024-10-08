@@ -30,7 +30,7 @@ jobs:
       run: ./gradlew test
 
   approve:
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' }}
     name: Approve Step
     needs: build
     environment:
