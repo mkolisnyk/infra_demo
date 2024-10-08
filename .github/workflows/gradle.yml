@@ -5,7 +5,9 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    types: [opened, reopened]
+    types: [opened, synchronize, edited, ready_for_review]
+    branches:
+      - main
 
 jobs:
   build:
@@ -32,6 +34,7 @@ jobs:
 
     - name: Collect artifacts
       uses: actions/upload-artifact@v4
+      if: always()
       with:
         name: Unit Test Results
         path: |
@@ -75,6 +78,7 @@ jobs:
 
       - name: Collect artifacts
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: Integration Test Results
           path: |
