@@ -1,5 +1,6 @@
 package com.sample.core;
 
+import java.io.Serial;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -9,15 +10,13 @@ public class Engine {
     private final float TAX_ALLOWANCE_CAP = 123000.f;
     private final float UPPER_RATE = 0.45f;
     
-    private Map<Float, Float> rates = new LinkedHashMap<Float, Float>() {
-        /**
-		 * 
-		 */
+    private final Map<Float, Float> rates = new LinkedHashMap<>() {
+        @Serial
 		private static final long serialVersionUID = 1L;
 
 		{
             put(50000.f, 0.2f);
-            put(145000.f, 0.4f);
+            put(153000.f, 0.4f);
         }
     };
     public float calculateTax1250L(float income) {
