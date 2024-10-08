@@ -22,7 +22,7 @@ public class EngineTest {
                 arguments(128000.f, 41200.f),
                 arguments(150000.f, 50000.f),
                 arguments(155000.f, 52100.f),
-                arguments(155000.f, 152100.f)
+                arguments(159000.f, 53900.f)
         );
     }
 
