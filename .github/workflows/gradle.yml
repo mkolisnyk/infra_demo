@@ -30,6 +30,13 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew test
 
+    - name: Collect artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Unit Test Results
+        path: |
+          build/reports/tests/test
+
   approve:
     if: ${{ github.ref == 'refs/heads/main' }}
     name: Approve Step
@@ -43,6 +50,7 @@ jobs:
           echo "Manually approved"
 
   integration-tests:
+    if: ${{ github.ref == 'refs/heads/main' }}
     name: Run Integration Tests
     needs: approve
     runs-on: ubuntu-latest
@@ -64,3 +72,10 @@ jobs:
 
       - name: Build with Gradle Wrapper
         run: ./gradlew integrationTest
+
+      - name: Collect artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Integration Test Results
+          path: |
+            build/reports/tests/test
