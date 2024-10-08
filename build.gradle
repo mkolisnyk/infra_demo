@@ -27,8 +27,20 @@ sourceSets {
             srcDir 'src/test/resources'
         }
     }
+    integration {
+        java {
+            srcDir 'src/it/java'
+        }
+        resources {
+            srcDir 'src/it/resources'
+        }
+    }
 }
 
+configurations {
+    integrationImplementation.extendsFrom testImplementation
+    integrationRuntime.extendsFrom testRuntime
+}
 
 repositories {
     mavenLocal()
@@ -42,13 +54,27 @@ dependencies {
 	testImplementation 'org.junit.platform:junit-platform-suite:1.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
     testImplementation 'org.junit.platform:junit-platform-suite-engine:1.9.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.4'
 }
 
 test {
     useJUnitPlatform {
+        excludeTags "IT"
         includeEngines "junit-jupiter"
         excludeEngines "junit-vintage"
         testClassesDirs = testing.suites.test.sources.output.classesDirs
         classpath = testing.suites.test.sources.runtimeClasspath
     }
+}
+
+task integrationTest(type: Test) {
+    useJUnitPlatform {
+        includeTags "IT"
+        includeEngines "junit-jupiter"
+        excludeEngines "junit-vintage"
+        testClassesDirs = testing.suites.test.sources.output.classesDirs
+        classpath = testing.suites.test.sources.runtimeClasspath
+    }
+//    testClassesDirs = sourceSets.integration.output.classesDirs + testing.suites.test.sources.output.classesDirs
+//    classpath = sourceSets.integration.runtimeClasspath + testing.suites.test.sources.runtimeClasspath
 }

@@ -20,11 +20,9 @@ public class EngineTest {
                 arguments(123000.f, 36700.f),
                 arguments(124000.f, 39600.f),
                 arguments(128000.f, 41200.f),
-                arguments(150000.f, 50250.f),
-                arguments(150000.f, 10250.f)
+                arguments(150000.f, 50250.f)
         );
     }
-
 
     @ParameterizedTest(name = "Calculate tax for {0}")
     @MethodSource("argumentSets")
