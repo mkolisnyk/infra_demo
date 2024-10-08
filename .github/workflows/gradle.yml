@@ -3,7 +3,6 @@ name: Java CI with Gradle
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
   pull_request:
     types: [opened, synchronize, edited, ready_for_review]
     branches:
@@ -30,7 +29,7 @@ jobs:
       uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew test
+      run: ./gradlew check test
 
     - name: Collect artifacts
       uses: actions/upload-artifact@v4
@@ -39,6 +38,7 @@ jobs:
         name: Unit Test Results
         path: |
           build/reports/tests/test
+		  build/reports/checkstyle
 
   approve:
     if: ${{ github.ref == 'refs/heads/main' }}
