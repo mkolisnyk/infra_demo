@@ -38,7 +38,6 @@ jobs:
         name: Unit Test Results
         path: |
           build/reports/tests/test
-		  build/reports/checkstyle
 
   approve:
     if: ${{ github.ref == 'refs/heads/main' }}
