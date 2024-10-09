@@ -56,6 +56,7 @@ public class AppTest {
     public void testAppCalculate1250L(float income, float expectedTax) throws Exception {
         TaxRequest input = new TaxRequest();
         input.setIncome(income);
+
         TaxResponse result = client.calculate(input);
         Assertions.assertEquals(expectedTax, result.getTax());
     }
