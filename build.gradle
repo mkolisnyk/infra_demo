@@ -32,6 +32,8 @@ sourceSets {
     integration {
         java {
             srcDir 'src/it/java'
+            compileClasspath += project.configurations.testCompileClasspath + main.output + test.output
+            runtimeClasspath += project.configurations.testRuntimeClasspath + main.output + test.output
         }
         resources {
             srcDir 'src/it/resources'
@@ -40,8 +42,8 @@ sourceSets {
 }
 
 configurations {
-    integrationImplementation.extendsFrom testImplementation
-    integrationRuntime.extendsFrom testRuntime
+    itImplementation.extendsFrom testImplementation
+    itRuntime.extendsFrom testRuntime
 }
 
 repositories {
@@ -61,11 +63,14 @@ dependencies {
 
 test {
     useJUnitPlatform {
-        excludeTags "IT"
         includeEngines "junit-jupiter"
         excludeEngines "junit-vintage"
         testClassesDirs = testing.suites.test.sources.output.classesDirs
         classpath = testing.suites.test.sources.runtimeClasspath
+    }
+    testLogging {
+        events "PASSED", "FAILED", "SKIPPED"
+        showStandardStreams = true
     }
     jacoco {
         enabled = true
@@ -91,14 +96,11 @@ jacocoTestReport {
 
 task integrationTest(type: Test) {
     useJUnitPlatform {
-        includeTags "IT"
         includeEngines "junit-jupiter"
         excludeEngines "junit-vintage"
-        testClassesDirs = testing.suites.test.sources.output.classesDirs
-        classpath = testing.suites.test.sources.runtimeClasspath
+        testClassesDirs = sourceSets.integration.output.classesDirs + testing.suites.test.sources.output.classesDirs
+        classpath += sourceSets.integration.runtimeClasspath + testing.suites.test.sources.runtimeClasspath
     }
-//    testClassesDirs = sourceSets.integration.output.classesDirs + testing.suites.test.sources.output.classesDirs
-//    classpath = sourceSets.integration.runtimeClasspath + testing.suites.test.sources.runtimeClasspath
 }
 
 checkstyle {

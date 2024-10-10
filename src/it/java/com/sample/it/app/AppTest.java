@@ -16,19 +16,18 @@ import java.util.List;
 
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-@Tag("IT")
 public class AppTest {
     private static List<Arguments> argumentSets() {
         return Arrays.asList(
-                arguments(0.f, 0.f),
-                arguments(25000.f, 2500.f),
-                arguments(50000.f, 7500.f),
-                arguments(51000.f, 7900.f),
-                arguments(123000.f, 36700.f),
-                arguments(124000.f, 39600.f),
-                arguments(128000.f, 41200.f),
-                arguments(150000.f, 50000.f),
-                arguments(155000.f, 52100.f)
+                Arguments.arguments(0.f, 0.f),
+                Arguments.arguments(25000.f, 2500.f),
+                Arguments.arguments(50000.f, 7500.f),
+                Arguments.arguments(51000.f, 7900.f),
+                Arguments.arguments(123000.f, 36700.f),
+                Arguments.arguments(124000.f, 39600.f),
+                Arguments.arguments(128000.f, 41200.f),
+                Arguments.arguments(150000.f, 50000.f),
+                Arguments.arguments(155000.f, 52100.f)
         );
     }
 
@@ -56,6 +55,7 @@ public class AppTest {
     public void testAppCalculate1250L(float income, float expectedTax) throws Exception {
         TaxRequest input = new TaxRequest();
         input.setIncome(income);
+
         TaxResponse result = client.calculate(input);
         Assertions.assertEquals(expectedTax, result.getTax());
     }
