@@ -6,9 +6,11 @@ buildscript {
 }
 
 plugins {
+    id 'checkstyle'
     id 'jacoco'
     id 'java'
     id 'jvm-test-suite'
+    id 'pmd'
 }
 
 sourceSets {
@@ -51,10 +53,10 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.3.4'
-	implementation 'org.springframework.boot:spring-boot-starter-web:3.3.4'
-	runtimeOnly 'com.h2database:h2:2.3.232'
-	testImplementation 'org.junit.platform:junit-platform-suite:1.9.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.3.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.3.4'
+    runtimeOnly 'com.h2database:h2:2.3.232'
+    testImplementation 'org.junit.platform:junit-platform-suite:1.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
     testImplementation 'org.junit.platform:junit-platform-suite-engine:1.9.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.4'
@@ -100,4 +102,14 @@ task integrationTest(type: Test) {
         testClassesDirs = sourceSets.integration.output.classesDirs + testing.suites.test.sources.output.classesDirs
         classpath += sourceSets.integration.runtimeClasspath + testing.suites.test.sources.runtimeClasspath
     }
+}
+
+checkstyle {
+    project.ext.checkstyleVersion = '8.20'    
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+pmd {
+    consoleOutput = true
+    toolVersion = "7.0.0"
 }

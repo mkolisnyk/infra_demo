@@ -31,6 +31,5 @@ public class EngineTest {
     public void testEngineCalculate1250L(float income, float expectedTax) {
         Engine engine = new Engine();
         Assertions.assertEquals(expectedTax, engine.calculateTax1250L(income));
-        // TODO: Add assertions
     }
 }

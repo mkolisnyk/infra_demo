@@ -1,13 +1,13 @@
 package com.sample.app.model;
 
 public class TaxResponse {
-	private float tax;
+    private float tax;
 
-	public float getTax() {
-		return tax;
-	}
+    public float getTax() {
+        return tax;
+    }
 
-	public void setTax(float tax) {
-		this.tax = tax;
-	}
+    public void setTax(float taxValue) {
+        this.tax = taxValue;
+    }
 }
