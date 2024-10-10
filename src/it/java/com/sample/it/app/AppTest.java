@@ -4,7 +4,10 @@ import com.sample.app.Application;
 import com.sample.app.model.TaxRequest;
 import com.sample.app.model.TaxResponse;
 import com.sample.it.api.AppClient;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,8 +16,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class AppTest {
     private static List<Arguments> argumentSets() {

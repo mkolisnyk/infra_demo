@@ -35,9 +35,9 @@ jobs:
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: Unit Test Results
+        name: Checks and Unit Test Results
         path: |
-          build/reports/tests/test
+          build/reports
 
   approve:
     if: ${{ github.ref == 'refs/heads/main' }}
