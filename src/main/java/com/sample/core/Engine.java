@@ -1,32 +1,22 @@
 package com.sample.core;
 
-import java.io.Serial;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+
+import org.reflections.Reflections;
+
+import com.sample.app.domain.ForCode;
+import com.sample.app.domain.RatesProvider;
+import com.sample.app.domain.TaxCode;
 
 public class Engine {
-    private final float taxAllowance = 12500.f;
-    private final float taxAllowanceCap = 123000.f;
-    private final float upperRate = 0.45f;
 
-    private final Map<Float, Float> rates = new LinkedHashMap<>() {
-        @Serial
-        private static final long serialVersionUID = 1L;
-
-        {
-            put(taxAllowance, 0.f);
-            put(50000.f, 0.2f);
-            put(153000.f, 0.4f);
-            put(Float.MAX_VALUE, 0.45f);
-        }
-    };
-    public float calculateTax1250L(float income) {
+    public float calculateTax1250L(float income) throws Exception {
         float tax = 0.f;
         float taxedAmount = 0;
-        if (income > taxAllowanceCap) {
-            rates.remove(taxAllowance);
-        }
+        Map<Float, Float> rates = getRates("1250L", income);
         for (Entry<Float, Float> entry : rates.entrySet()) {
             float charge = (Math.min(entry.getKey(), income) - taxedAmount);
             tax += charge * entry.getValue();
@@ -36,5 +26,22 @@ public class Engine {
             }
         }
         return tax;
+    }
+    
+    public Map<Float, Float> getRates(String codeString, Float income) throws Exception {
+    	TaxCode code = TaxCode.fromString(codeString);
+        Reflections reflections = new Reflections("com.sample.app.domain.ratesproviders");
+        Set<Class<? extends RatesProvider>> subTypes = reflections.getSubTypesOf(RatesProvider.class);
+        for (Class<? extends RatesProvider> type : subTypes) {
+        	System.out.println("Class: " + type.getCanonicalName());
+            ForCode[] annotations = type.getAnnotationsByType(ForCode.class);
+            for (ForCode annotation : annotations) {
+            	System.out.println("Attribute: " + annotation.value().getCode());
+            	if (annotation.value().getCode().equals(code.getCode())) {
+            		return type.getConstructor().newInstance().getRates(code, income);
+            	}
+            }
+        }
+    	return new LinkedHashMap<Float, Float>();
     }
 }

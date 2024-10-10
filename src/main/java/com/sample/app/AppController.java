@@ -19,7 +19,7 @@ public class AppController {
     }
 
     @PostMapping("/tax")
-    ResponseEntity<?> calculateTax(@RequestBody TaxRequest request) {
+    ResponseEntity<?> calculateTax(@RequestBody TaxRequest request) throws Exception {
         Engine engine = new Engine();
         TaxResponse response = new TaxResponse();
         response.setTax(engine.calculateTax1250L(request.getIncome()));

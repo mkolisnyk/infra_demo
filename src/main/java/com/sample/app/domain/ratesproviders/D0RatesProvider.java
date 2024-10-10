@@ -1,12 +1,14 @@
 package com.sample.app.domain.ratesproviders;
 
+import com.sample.app.domain.ForCode;
 import com.sample.app.domain.RatesProvider;
 import com.sample.app.domain.TaxCode;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class D0RatesProvider implements RatesProvider {
+@ForCode(TaxCode.D0)
+public class D0RatesProvider extends RatesProvider {
     @Override
     public Map<Float, Float> getRates(TaxCode code, Float income) {
         Map<Float, Float> rates = new LinkedHashMap<>();
