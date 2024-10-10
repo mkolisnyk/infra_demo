@@ -3,7 +3,6 @@ name: Java CI with Gradle
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
   pull_request:
     types: [opened, synchronize, edited, ready_for_review]
     branches:
