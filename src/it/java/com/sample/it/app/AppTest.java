@@ -60,4 +60,25 @@ public class AppTest {
         TaxResponse result = client.calculate(input);
         Assertions.assertEquals(expectedTax, result.getTax());
     }
+
+    private static List<Arguments> argumentSetsWithTaxCode() {
+        return Arrays.asList(
+                Arguments.arguments(0.f, "1000L", 0.f),
+                Arguments.arguments(25000.f, "500L", 4000.f),
+                Arguments.arguments(50000.f, "1250L", 7500.f),
+                Arguments.arguments(51000.f, "D0", 20400.f),
+                Arguments.arguments(123000.f, "D1", 55350.f)
+        );
+    }
+
+    @ParameterizedTest(name = "App request Calculate tax (code {1}) for {0}")
+    @MethodSource("argumentSetsWithTaxCode")
+    public void testAppCalculate(float income, String code, float expectedTax) throws Exception {
+        TaxRequest input = new TaxRequest();
+        input.setIncome(income);
+        input.setCode(code);
+
+        TaxResponse result = client.calculate(input);
+        Assertions.assertEquals(expectedTax, result.getTax());
+    }
 }
