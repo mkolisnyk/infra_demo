@@ -1,5 +1,6 @@
 package com.sample.app;
 
+import com.sample.app.domain.TaxCode;
 import org.springframework.http.ResponseEntity;
 
 import com.sample.app.model.TaxRequest;
@@ -28,6 +29,7 @@ public class AppController {
         }
         TaxResponse response = new TaxResponse();
         response.setTax(engine.calculateTax(code, request.getIncome()));
+        response.setCode(TaxCode.fromString(code));
         return ResponseEntity.ok(response);
     }
 }

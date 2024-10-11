@@ -12,7 +12,10 @@ public class BasicRatesProvider extends RatesProvider {
     @Override
     public Map<Float, Float> getRates(TaxCode code, Float income) {
         Float taxAllowanceCap = 123000.f;
-        Float taxAllowance = Float.valueOf(code.getValue()) * 10.f;
+        Float taxAllowance = 0.f;
+        if (code.getValue().matches("(\\d+)")) {
+            taxAllowance = Float.valueOf(code.getValue()) * 10.f;
+        }
         Map<Float, Float> rates = new LinkedHashMap<Float, Float>();
 
         if (income <= taxAllowanceCap) {

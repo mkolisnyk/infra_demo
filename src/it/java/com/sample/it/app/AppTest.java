@@ -1,6 +1,7 @@
 package com.sample.it.app;
 
 import com.sample.app.Application;
+import com.sample.app.domain.TaxCode;
 import com.sample.app.model.TaxRequest;
 import com.sample.app.model.TaxResponse;
 import com.sample.it.api.AppClient;
@@ -63,22 +64,25 @@ public class AppTest {
 
     private static List<Arguments> argumentSetsWithTaxCode() {
         return Arrays.asList(
-                Arguments.arguments(0.f, "1000L", 0.f),
-                Arguments.arguments(25000.f, "500L", 4000.f),
-                Arguments.arguments(50000.f, "1250L", 7500.f),
-                Arguments.arguments(51000.f, "D0", 20400.f),
-                Arguments.arguments(123000.f, "D1", 55350.f)
+                Arguments.arguments(0.f, "1000L", 0.f, TaxCode.L, "1000"),
+                Arguments.arguments(25000.f, "500L", 4000.f, TaxCode.L, "500"),
+                Arguments.arguments(50000.f, "1250L", 7500.f, TaxCode.L, "1250"),
+                Arguments.arguments(51000.f, "D0", 20400.f, TaxCode.D0, ""),
+                Arguments.arguments(123000.f, "D1", 55350.f, TaxCode.D1, "")
         );
     }
 
     @ParameterizedTest(name = "App request Calculate tax (code {1}) for {0}")
     @MethodSource("argumentSetsWithTaxCode")
-    public void testAppCalculate(float income, String code, float expectedTax) throws Exception {
+    public void testAppCalculate(float income, String code, float expectedTax,
+                                 TaxCode expectedCode, String expectedValue) throws Exception {
         TaxRequest input = new TaxRequest();
         input.setIncome(income);
         input.setCode(code);
 
         TaxResponse result = client.calculate(input);
         Assertions.assertEquals(expectedTax, result.getTax());
+        Assertions.assertEquals(expectedCode, result.getCode());
+        Assertions.assertEquals(expectedValue, result.getCode().getValue());
     }
 }

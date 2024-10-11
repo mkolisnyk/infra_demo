@@ -77,7 +77,7 @@ test {
     jacoco {
         enabled = true
         includes = []
-        excludes = ["com.sample.app.*"]
+        excludes = ["com.sample.app.model.*", "com.sample.app.Application", "com.sample.app.model.AppController"]
     }
     finalizedBy jacocoTestReport
 }

@@ -1,6 +1,7 @@
 package com.sample.app.domain;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,5 +26,13 @@ public class TaxCodeTest {
         TaxCode actual = TaxCode.fromString(input);
         Assertions.assertEquals(expectedCode, actual, "Unexpected code detected");
         Assertions.assertEquals(expectedValue, actual.getValue(), "Unexpected value detected");
+    }
+
+    @Test
+    public void testTaxCodeParameters() {
+        TaxCode code = TaxCode.C0T;
+        Assertions.assertEquals(TaxCode.C0T.getCode(), code.getCode());
+        Assertions.assertEquals(TaxCode.C0T.getDescription(), code.getDescription());
+        Assertions.assertEquals(TaxCode.C0T.getValue(), code.getValue());
     }
 }

@@ -1,5 +1,6 @@
 package com.sample.core;
 
+import com.sample.app.domain.TaxCode;
 import com.sample.lib.AssertEx;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -64,5 +65,19 @@ public class EngineTest {
         Map<Float, Float> rates = engine.getRates("NAAAAH", 50000.f);
         Map<Float, Float> expectedRates = new LinkedHashMap<>();
         AssertEx.assertMapEquals(expectedRates, rates, "Unexpected standard rates calculation");
+    }
+    private static List<Arguments> argumentSetsFroTaxCodes() {
+        return Arrays.asList(
+                arguments(TaxCode.L),
+                arguments(TaxCode.D0),
+                arguments(TaxCode.D1)
+        );
+    }
+
+    @ParameterizedTest(name = "Calculate tax for {0}")
+    @MethodSource("argumentSetsFroTaxCodes")
+    public void testGetRatesForCodes(TaxCode code) throws Exception {
+        Engine engine = new Engine();
+        Assertions.assertTrue(engine.getRates(code.getCode(), 0.f).size() > 0);
     }
 }
