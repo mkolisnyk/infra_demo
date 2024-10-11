@@ -7,6 +7,7 @@ import com.sample.app.model.TaxRequest;
 import com.sample.app.model.TaxResponse;
 import com.sample.core.Engine;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,5 +32,10 @@ public class AppController {
         response.setTax(engine.calculateTax(code, request.getIncome()));
         response.setCode(TaxCode.fromString(code));
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/rates/{code}")
+    ResponseEntity<?> getRates(@PathVariable("code") String code) throws Exception {
+        Engine engine = new Engine();
+        return ResponseEntity.ok(engine.getRates(code, 0.f));
     }
 }

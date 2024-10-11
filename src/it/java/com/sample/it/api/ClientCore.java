@@ -19,4 +19,14 @@ public class ClientCore {
         HttpResponse response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         return new ObjectMapper().reader().readValue(response.body().toString(), outType);
     }
+
+    public <RES> RES get(String endpoint, Class<RES> outType) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder(URI.create(endpoint))
+                .header("Content-Type", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        return new ObjectMapper().reader().readValue(response.body().toString(), outType);
+    }
 }

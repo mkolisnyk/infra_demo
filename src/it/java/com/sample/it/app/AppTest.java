@@ -5,10 +5,12 @@ import com.sample.app.domain.TaxCode;
 import com.sample.app.model.TaxRequest;
 import com.sample.app.model.TaxResponse;
 import com.sample.it.api.AppClient;
+import com.sample.lib.AssertEx;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,7 +18,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AppTest {
     private static List<Arguments> argumentSets() {
@@ -84,5 +88,30 @@ public class AppTest {
         Assertions.assertEquals(expectedTax, result.getTax());
         Assertions.assertEquals(expectedCode, result.getCode());
         Assertions.assertEquals(expectedValue, result.getCode().getValue());
+    }
+
+    private Map<String, String> convertToStringMap(Map<Float, Float> input) {
+        Map<String, String> output = new LinkedHashMap<>();
+        for (Map.Entry entry : input.entrySet()) {
+            output.put(entry.getKey().toString(), entry.getValue().toString());
+        }
+        return output;
+    }
+
+    @Test
+    public void testGetRates1250L() throws Exception {
+        Map<Float, Float> expectedRates = new LinkedHashMap<>() {
+            {
+                put(12500.f, 0.f);
+                put(50000.f, 0.2f);
+                put(153000.f, 0.4f);
+                put(Float.MAX_VALUE, 0.45f);
+            }
+        };
+        Map<Float, Float> rates = client.getRates("1250L");
+        AssertEx.assertMapEquals(
+                convertToStringMap(expectedRates),
+                convertToStringMap(rates),
+                "Unexpected standard rates calculation");
     }
 }

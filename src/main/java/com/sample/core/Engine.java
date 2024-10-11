@@ -33,10 +33,8 @@ public class Engine {
         Reflections reflections = new Reflections("com.sample.app.domain.ratesproviders");
         Set<Class<? extends RatesProvider>> subTypes = reflections.getSubTypesOf(RatesProvider.class);
         for (Class<? extends RatesProvider> type : subTypes) {
-            System.out.println("Class: " + type.getCanonicalName());
             ForCode[] annotations = type.getAnnotationsByType(ForCode.class);
             for (ForCode annotation : annotations) {
-                System.out.println("Attribute: " + annotation.value().getCode());
                 if (annotation.value().getCode().equals(code.getCode())) {
                     return type.getConstructor().newInstance().getRates(code, income);
                 }
