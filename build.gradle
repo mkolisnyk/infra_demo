@@ -55,6 +55,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.3.4'
     implementation 'org.springframework.boot:spring-boot-starter-web:3.3.4'
+    implementation 'org.reflections:reflections:0.10.2'
     runtimeOnly 'com.h2database:h2:2.3.232'
     testImplementation 'org.junit.platform:junit-platform-suite:1.9.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
@@ -76,7 +77,7 @@ test {
     jacoco {
         enabled = true
         includes = []
-        excludes = ["com.sample.app.*"]
+        excludes = ["com.sample.app.model.*", "com.sample.app.Application", "com.sample.app.model.AppController"]
     }
     finalizedBy jacocoTestReport
 }
@@ -88,7 +89,8 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/sample/app/**/*.*'
+                    '**/sample/app/model/**/*.*',
+                    '**/sample/app/*.*',
             ])
         })
     }

@@ -1,5 +1,6 @@
 package com.sample.app;
 
+import com.sample.app.domain.TaxCode;
 import org.springframework.http.ResponseEntity;
 
 import com.sample.app.model.TaxRequest;
@@ -19,10 +20,16 @@ public class AppController {
     }
 
     @PostMapping("/tax")
-    ResponseEntity<?> calculateTax(@RequestBody TaxRequest request) {
+    ResponseEntity<?> calculateTax(@RequestBody TaxRequest request) throws Exception {
         Engine engine = new Engine();
+        float income = request.getIncome();
+        String code = request.getCode();
+        if (code == null) {
+            code = "1250L";
+        }
         TaxResponse response = new TaxResponse();
-        response.setTax(engine.calculateTax1250L(request.getIncome()));
+        response.setTax(engine.calculateTax(code, request.getIncome()));
+        response.setCode(TaxCode.fromString(code));
         return ResponseEntity.ok(response);
     }
 }
