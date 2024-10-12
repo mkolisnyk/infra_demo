@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ForCode(TaxCode.SBR)
+@ForCode(TaxCode.CBR)
 public class SBRRatesProvider extends RatesProvider {
     @Override
     public Map<Float, Float> getRates(TaxCode code, Float income) {
