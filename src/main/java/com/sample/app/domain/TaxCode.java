@@ -67,7 +67,7 @@ public enum TaxCode {
 
     public static TaxCode fromString(String code) {
         for (TaxCode item : TaxCode.values()) {
-            if (code.endsWith(item.getCode())) {
+            if (code.matches("(\\d+)" + item.getCode()) || code.equals(item.getCode())) {
                 item.setValue(code.substring(0, code.lastIndexOf(item.getCode())));
                 return item;
             }
