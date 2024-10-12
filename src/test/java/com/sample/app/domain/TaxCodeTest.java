@@ -16,7 +16,17 @@ public class TaxCodeTest {
         return Arrays.asList(
                 arguments("1257L", TaxCode.L, "1257"),
                 arguments("D0", TaxCode.D0, ""),
-                arguments("Something", TaxCode.UNKNOWN, "")
+                arguments("Something", TaxCode.UNKNOWN, ""),
+                arguments("1200S", TaxCode.S, "1200"),
+                arguments("NT", TaxCode.NT, ""),
+                arguments("SBR", TaxCode.SBR, ""),
+                arguments("SD0", TaxCode.SD0, ""),
+                arguments("SD1", TaxCode.SD1, ""),
+                arguments("SD2", TaxCode.SD2, ""),
+                arguments("SD3", TaxCode.SD3, ""),
+                arguments("1200C", TaxCode.C, "1200"),
+                arguments("CD0", TaxCode.CD0, ""),
+                arguments("CD1", TaxCode.CD1, "")
         );
     }
 

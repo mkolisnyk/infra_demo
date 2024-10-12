@@ -7,6 +7,7 @@ buildscript {
 
 plugins {
     id 'checkstyle'
+    id 'eclipse'
     id 'jacoco'
     id 'java'
     id 'jvm-test-suite'
@@ -33,8 +34,8 @@ sourceSets {
     integration {
         java {
             srcDir 'src/it/java'
-            compileClasspath += project.configurations.testCompileClasspath + main.output + test.output
-            runtimeClasspath += project.configurations.testRuntimeClasspath + main.output + test.output
+            compileClasspath += project.configurations.compileClasspath + project.configurations.testCompileClasspath + sourceSets.main.output + sourceSets.test.output
+        	runtimeClasspath += project.configurations.runtimeClasspath + project.configurations.testRuntimeClasspath + sourceSets.main.output + sourceSets.test.output
         }
         resources {
             srcDir 'src/it/resources'
@@ -43,8 +44,8 @@ sourceSets {
 }
 
 configurations {
-    itImplementation.extendsFrom testImplementation
-    itRuntime.extendsFrom testRuntime
+    integrationImplementation.extendsFrom testImplementation
+    integrationRuntime.extendsFrom testRuntime
 }
 
 repositories {
@@ -115,3 +116,10 @@ pmd {
     consoleOutput = true
     toolVersion = "7.0.0"
 }
+
+eclipse {
+    classpath {
+        plusConfigurations+=[configurations.integrationCompileClasspath] 
+    } 
+}
+
