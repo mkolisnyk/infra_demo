@@ -11,16 +11,19 @@ import java.util.Map;
 public class ScotlandRatesProvider extends RatesProvider {
     @Override
     public Map<Float, Float> getRates(TaxCode code, Float income) {
-        Float taxAllowanceCap = 125140.f;
+        Float taxAllowanceCap = 100000.f;
         Float taxAllowance = 0.f;
         if (code.getValue().matches("(\\d+)")) {
             taxAllowance = Float.valueOf(code.getValue()) * 10.f;
         }
         Map<Float, Float> rates = new LinkedHashMap<Float, Float>();
-
-        if (income <= taxAllowanceCap) {
-            rates.put(taxAllowance, 0.f);
+        if (income > taxAllowanceCap) {
+            taxAllowance -= (income - taxAllowanceCap) * 0.5f;
+            if (taxAllowance < 0) {
+                taxAllowance = 0.f;
+            }
         }
+        rates.put(taxAllowance, 0.f);
         rates.put(14876.f, 0.19f);
         rates.put(26561.f, 0.20f);
         rates.put(43662.f, 0.21f);

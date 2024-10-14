@@ -29,8 +29,8 @@ public class AppTest {
                 Arguments.arguments(25000.f, 2500.f),
                 Arguments.arguments(50000.f, 7500.f),
                 Arguments.arguments(51000.f, 7900.f),
-                Arguments.arguments(123000.f, 36700.f),
-                Arguments.arguments(124000.f, 39600.f),
+                Arguments.arguments(123000.f, 39000.f),
+                Arguments.arguments(124000.f, 39500.f),
                 Arguments.arguments(128000.f, 41200.f),
                 Arguments.arguments(150000.f, 50000.f),
                 Arguments.arguments(155000.f, 52100.f)
