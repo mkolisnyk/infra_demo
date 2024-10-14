@@ -1,45 +1,52 @@
 package com.sample.core;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sample.app.domain.RatesContainer;
+import com.sample.app.domain.TaxCode;
+
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
-import org.reflections.Reflections;
-
-import com.sample.app.domain.ForCode;
-import com.sample.app.domain.RatesProvider;
-import com.sample.app.domain.TaxCode;
 
 public class Engine {
 
     public float calculateTax(String code, float income) throws Exception {
         float tax = 0.f;
         float taxedAmount = 0;
-        Map<Float, Float> rates = getRates(code, income);
-        for (Entry<Float, Float> entry : rates.entrySet()) {
-            float charge = (Math.min(entry.getKey(), income) - taxedAmount);
-            tax += charge * entry.getValue();
+        Map<String, String> rates = getRates(code, income);
+        for (Entry<String, String> entry : rates.entrySet()) {
+            float key = Float.valueOf(entry.getKey());
+            float charge = (Math.min(key, income) - taxedAmount);
+            tax += charge * Float.valueOf(entry.getValue());
             taxedAmount += charge;
-            if (income <= entry.getKey()) {
+            if (income <= key) {
                 break;
             }
         }
         return tax;
     }
 
-    public Map<Float, Float> getRates(String codeString, Float income) throws Exception {
+    public Map<String, String> getRates(String codeString, Float income) throws Exception {
         TaxCode code = TaxCode.fromString(codeString);
-        Reflections reflections = new Reflections("com.sample.app.domain.ratesproviders");
-        Set<Class<? extends RatesProvider>> subTypes = reflections.getSubTypesOf(RatesProvider.class);
-        for (Class<? extends RatesProvider> type : subTypes) {
-            ForCode[] annotations = type.getAnnotationsByType(ForCode.class);
-            for (ForCode annotation : annotations) {
-                if (annotation.value().getCode().equals(code.getCode())) {
-                    return type.getConstructor().newInstance().getRates(code, income);
-                }
-            }
+        ObjectMapper mapper = new ObjectMapper();
+        LinkedHashMap<String, LinkedHashMap> ratesMap = new LinkedHashMap<String, LinkedHashMap>();
+        InputStream resource = Thread.currentThread().getContextClassLoader()
+                .getResourceAsStream("./config_rates.json");
+        try {
+            ratesMap =
+                    mapper.readValue(resource, LinkedHashMap.class);
+        } finally {
+            resource.close();
         }
-        return new LinkedHashMap<Float, Float>();
+        if (ratesMap.containsKey(code.getCode())) {
+            RatesContainer container = new RatesContainer();
+            container.setUseAllowance((Boolean) ratesMap.get(code.getCode()).get("useAllowance"));
+            container.processAllowance(code, income);
+            container.setRates((Map<String, String>) ratesMap.get(code.getCode()).get("rates"));
+            return container.getRates();
+        }
+        return new LinkedHashMap<String, String>();
     }
 }

@@ -1,0 +1,100 @@
+{
+  "L" : {
+    "useAllowance" : true,
+    "rates" : {
+      "50000.0" : "0.2",
+      "153000.0" : "0.4",
+      "3.4028235E38" : "0.45"
+    }
+  },
+  "S" : {
+    "useAllowance" : true,
+    "rates" : {
+      "14876.0" : "0.19",
+      "26561.0" : "0.2",
+      "43662.0" : "0.21",
+      "75000.0" : "0.42",
+      "3.4028235E38" : "0.45"
+    }
+  },
+  "SD0" : {
+    "useAllowance" : false,
+    "rates" : {
+      "3.4028235E38" : "0.21"
+    }
+  },
+  "SD2" : {
+    "useAllowance" : false,
+    "rates" : {
+      "3.4028235E38" : "0.45"
+    }
+  },
+  "SD3" : {
+    "useAllowance" : false,
+    "rates" : {
+      "3.4028235E38" : "0.48"
+    }
+  },
+  "BR" : {
+    "useAllowance" : false,
+    "rates" : {
+      "3.4028235E38" : "0.2"
+    }
+  },
+  "SD1" : {
+    "useAllowance" : false,
+    "rates" : {
+      "3.4028235E38" : "0.42"
+    }
+  },
+  "SBR" : {
+    "useAllowance" : false,
+    "rates" : {
+      "3.4028235E38" : "0.2"
+    }
+  },
+  "CBR" : {
+    "useAllowance" : false,
+    "rates" : {
+      "3.4028235E38" : "0.2"
+    }
+  },
+  "D0" : {
+    "useAllowance" : false,
+    "rates" : {
+      "153000.0" : "0.4",
+      "3.4028235E38" : "0.45"
+    }
+  },
+  "D1" : {
+    "useAllowance" : false,
+    "rates" : {
+      "3.4028235E38" : "0.45"
+    }
+  },
+  "NT" : {
+    "useAllowance" : false,
+    "rates" : { }
+  },
+  "C" : {
+    "useAllowance" : true,
+    "rates" : {
+      "50270.0" : "0.2",
+      "125140.0" : "0.4",
+      "3.4028235E38" : "0.45"
+    }
+  },
+  "CD0" : {
+    "useAllowance" : false,
+    "rates" : {
+      "153000.0" : "0.4",
+      "3.4028235E38" : "0.45"
+    }
+  },
+  "CD1" : {
+    "useAllowance" : false,
+    "rates" : {
+      "3.4028235E38" : "0.45"
+    }
+  }
+}
