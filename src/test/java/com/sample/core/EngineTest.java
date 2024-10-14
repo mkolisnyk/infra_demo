@@ -31,6 +31,7 @@ public class EngineTest {
             arguments(E_TAX_CODE, 150000.f, 50000.f),
             arguments(E_TAX_CODE, 155000.f, 52100.f),
             arguments(E_TAX_CODE, 159000.f, 53900.f),
+            arguments(TaxCode.BR.getCode(), 25000.f, 5000.f),
             arguments("NT", 10000.f, 0.f),
             arguments("NT", 12000.f, 0.f),
             arguments("NT", 20000.f, 0.f),

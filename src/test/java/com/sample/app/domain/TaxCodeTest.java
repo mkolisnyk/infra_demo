@@ -15,6 +15,7 @@ public class TaxCodeTest {
     private static List<Arguments> argumentSets() {
         return Arrays.asList(
                 arguments("1257L", TaxCode.L, "1257"),
+                arguments("BR", TaxCode.BR, ""),
                 arguments("D0", TaxCode.D0, ""),
                 arguments("Something", TaxCode.UNKNOWN, ""),
                 arguments("1200S", TaxCode.S, "1200"),

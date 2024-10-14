@@ -42,8 +42,8 @@ public enum TaxCode {
     MULTIPLE("MUL", "Multiple tax codes combined"),
     UNKNOWN("UNK", "Unknown");
 
-    private String code;
-    private String description;
+    private final String code;
+    private final String description;
     private String value = "";
     TaxCode(String codeValue, String descriptionValue) {
         this.code = codeValue;

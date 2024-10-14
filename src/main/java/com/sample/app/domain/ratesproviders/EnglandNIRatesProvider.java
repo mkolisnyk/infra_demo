@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ForCode(TaxCode.L)
-public class BasicRatesProvider extends RatesProvider {
+public class EnglandNIRatesProvider extends RatesProvider {
     @Override
     public Map<Float, Float> getRates(TaxCode code, Float income) {
         Float taxAllowanceCap = 123000.f;
