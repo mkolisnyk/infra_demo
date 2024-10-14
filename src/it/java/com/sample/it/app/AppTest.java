@@ -114,4 +114,25 @@ public class AppTest {
                 convertToStringMap(rates),
                 "Unexpected standard rates calculation");
     }
+
+    @Test
+    public void testCalculateMultipleTages() throws Exception {
+        TaxRequest[] inputs = new TaxRequest[3];
+        inputs[0] = new TaxRequest();
+        inputs[0].setIncome(10000);
+        inputs[0].setCode(TaxCode.BR.getCode());
+
+        inputs[1] = new TaxRequest();
+        inputs[1].setIncome(20000);
+        inputs[1].setCode(TaxCode.D0.getCode());
+
+        inputs[2] = new TaxRequest();
+        inputs[2].setIncome(50000);
+        inputs[2].setCode("1250L");
+
+        TaxResponse result = client.calculateMultiple(inputs);
+        Assertions.assertEquals(17500.f, result.getTax());
+        Assertions.assertEquals(TaxCode.MULTIPLE, result.getCode());
+        Assertions.assertEquals("", result.getCode().getValue());
+    }
 }

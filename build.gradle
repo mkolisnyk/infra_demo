@@ -114,8 +114,8 @@ task integrationTest(type: Test) {
     useJUnitPlatform {
         includeEngines "junit-jupiter"
         excludeEngines "junit-vintage"
-        testClassesDirs = sourceSets.integration.output.classesDirs + testing.suites.test.sources.output.classesDirs
-        classpath += sourceSets.integration.runtimeClasspath + testing.suites.test.sources.runtimeClasspath
+        testClassesDirs = testing.suites.test.sources.output.classesDirs + sourceSets.integration.output.classesDirs
+        classpath = testing.suites.test.sources.runtimeClasspath + sourceSets.integration.runtimeClasspath
     }
 }
 
