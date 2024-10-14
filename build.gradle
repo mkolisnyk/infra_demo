@@ -90,12 +90,23 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/sample/app/model/**/*.*',
-                    '**/sample/app/*.*',
+                     '**/sample/app/model/**/*.*',
+                     '**/sample/app/*.*',
             ])
         })
     }
     dependsOn test
+    finalizedBy jacocoTestCoverageVerification
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.8
+            }
+        }
+   }
 }
 
 task integrationTest(type: Test) {

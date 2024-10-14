@@ -39,6 +39,7 @@ public enum TaxCode {
             + " rate in Wales (usually used if you’ve got more than one job or pension)"),
     CD1("CD1", "All your income from this job or pension is taxed at the"
             + " additional rate in Wales (usually used if you’ve got more than one job or pension)"),
+    MULTIPLE("MUL", "Multiple tax codes combined"),
     UNKNOWN("UNK", "Unknown");
 
     private String code;
