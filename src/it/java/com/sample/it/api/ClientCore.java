@@ -29,4 +29,12 @@ public class ClientCore {
         HttpResponse response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         return new ObjectMapper().reader().readValue(response.body().toString(), outType);
     }
+
+    public HttpResponse head(String endpoint) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder(URI.create(endpoint))
+                .GET()
+                .build();
+        HttpResponse response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        return response;
+    }
 }

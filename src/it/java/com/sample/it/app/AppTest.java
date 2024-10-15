@@ -56,6 +56,11 @@ public class AppTest {
         client = new AppClient("http://localhost:8080");
     }
 
+    @Test
+    public void testPing() throws Exception {
+        Assertions.assertEquals(200, client.ping());
+    }
+
     @ParameterizedTest(name = "App request Calculate tax for {0}")
     @MethodSource("argumentSets")
     public void testAppCalculate1250L(float income, float expectedTax) throws Exception {

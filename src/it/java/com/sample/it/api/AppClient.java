@@ -12,6 +12,9 @@ public class AppClient {
         this.host = hostValue;
     }
 
+    public int ping() throws Exception {
+        return client.head(this.host + "/ping").statusCode();
+    }
     public TaxResponse calculate(TaxRequest input) throws Exception {
         return client.post(this.host + "/tax", input, TaxResponse.class);
     }
