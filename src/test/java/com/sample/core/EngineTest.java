@@ -143,4 +143,61 @@ public class EngineTest {
         Engine engine = new Engine();
         Assertions.assertEquals(0, engine.getRates(code.getCode(), 0.f).size());
     }
+
+
+    private static List<Arguments> argumentAllowanceSets() {
+        return Arrays.asList(
+                arguments(E_TAX_CODE, 0.f, 12500.f),
+                arguments(E_TAX_CODE, 25000.f, 12500.f),
+                arguments(E_TAX_CODE, 50000.f, 12500.f),
+                arguments(E_TAX_CODE, 51000.f, 12500.f),
+                arguments(E_TAX_CODE, 110000.f, 7500.f),
+                arguments(E_TAX_CODE, 123000.f, 1000.f),
+                arguments(E_TAX_CODE, 124000.f, 500.f),
+                arguments(E_TAX_CODE, 128000.f, 0.f),
+                arguments(E_TAX_CODE, 150000.f, 0.f),
+                arguments(E_TAX_CODE, 155000.f, 0.f),
+                arguments(E_TAX_CODE, 159000.f, 0.f),
+                arguments(TaxCode.BR.getCode(), 25000.f, 0.f),
+                arguments("NT", 10000.f, 0.f),
+                arguments("NT", 12000.f, 0.f),
+                arguments("NT", 20000.f, 0.f),
+                arguments(S_TAX_CODE, 0.f, 12500.f),
+                arguments(S_TAX_CODE, 25000.f, 12500.f),
+                arguments(S_TAX_CODE, 50000.f, 12500.f),
+                arguments(S_TAX_CODE, 51000.f, 12500.f),
+                arguments(S_TAX_CODE, 110000.f, 7500.f),
+                arguments(S_TAX_CODE, 123000.f, 1000.f),
+                arguments(S_TAX_CODE, 124000.f, 500.f),
+                arguments(S_TAX_CODE, 128000.f, 0.f),
+                arguments(S_TAX_CODE, 150000.f, 0.f),
+                arguments(S_TAX_CODE, 155000.f, 0.f),
+                arguments(S_TAX_CODE, 159000.f, 0.f),
+                arguments(TaxCode.SBR.getCode(), 150000.f, 0.f),
+                arguments(TaxCode.SD0.getCode(), 150000.f, 0.f),
+                arguments(TaxCode.SD1.getCode(), 150000.f, 0.f),
+                arguments(TaxCode.SD2.getCode(), 150000.f, 0.f),
+                arguments(TaxCode.SD3.getCode(), 150000.f, 0.0f),
+                arguments(TaxCode.CBR.getCode(), 150000.f, 0.f),
+                arguments(TaxCode.CD0.getCode(), 150000.f, 0.f),
+                arguments(TaxCode.CD1.getCode(), 150000.f, 0.f),
+                arguments(C_TAX_CODE, 0.f, 12500.f),
+                arguments(C_TAX_CODE, 25000.f, 12500.f),
+                arguments(C_TAX_CODE, 50000.f, 12500.f),
+                arguments(C_TAX_CODE, 51000.f, 12500.f),
+                arguments(C_TAX_CODE, 123000.f, 1000.f),
+                arguments(C_TAX_CODE, 124000.f, 500.f),
+                arguments(C_TAX_CODE, 128000.f, 0.f),
+                arguments(C_TAX_CODE, 150000.f, 0.f),
+                arguments(C_TAX_CODE, 155000.f, 0.f),
+                arguments(C_TAX_CODE, 159000.f, 0.f)
+        );
+    }
+
+    @ParameterizedTest(name = "Calculate tax for {1}. Code: {0}")
+    @MethodSource("argumentAllowanceSets")
+    public void testEngineCalculateAllowance(String code, float income, float expectedAllowance) throws Exception {
+        Engine engine = new Engine();
+        Assertions.assertEquals(expectedAllowance, engine.calculateAllowance(TaxCode.fromString(code), income));
+    }
 }

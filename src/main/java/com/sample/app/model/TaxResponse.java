@@ -3,8 +3,17 @@ package com.sample.app.model;
 import com.sample.app.domain.TaxCode;
 
 public class TaxResponse {
+    private float allowance;
     private float tax;
     private TaxCode code;
+
+    public float getAllowance() {
+        return allowance;
+    }
+
+    public void setAllowance(float allowanceValue) {
+        this.allowance = allowanceValue;
+    }
 
     public float getTax() {
         return tax;

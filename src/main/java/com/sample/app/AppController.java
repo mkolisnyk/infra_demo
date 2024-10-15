@@ -30,6 +30,7 @@ public class AppController {
         }
         TaxResponse response = new TaxResponse();
         response.setTax(engine.calculateTax(code, income));
+        response.setAllowance(engine.calculateAllowance(TaxCode.fromString(code), income));
         response.setCode(TaxCode.fromString(code));
         return ResponseEntity.ok(response);
     }
@@ -37,6 +38,7 @@ public class AppController {
     ResponseEntity<?> calculateTax(@RequestBody TaxRequest[] request) throws Exception {
         Engine engine = new Engine();
         float totalTax = 0.f;
+        float totalAllowance = 0.f;
         for (TaxRequest item : request) {
             float income = item.getIncome();
             String code = item.getCode();
@@ -44,9 +46,11 @@ public class AppController {
                 code = "1250L";
             }
             totalTax += engine.calculateTax(code, income);
+            totalAllowance += engine.calculateAllowance(TaxCode.fromString(code), income);
         }
         TaxResponse response = new TaxResponse();
         response.setTax(totalTax);
+        response.setAllowance(totalAllowance);
         response.setCode(TaxCode.MULTIPLE);
         return ResponseEntity.ok(response);
     }

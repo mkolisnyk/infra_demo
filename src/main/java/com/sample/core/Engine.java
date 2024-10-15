@@ -49,4 +49,19 @@ public class Engine {
         }
         return new LinkedHashMap<String, String>();
     }
+
+    public Float calculateAllowance(TaxCode code, Float income) {
+        Float taxAllowanceCap = 100000.f;
+        Float taxAllowance = 0.f;
+        if (code.getValue().matches("(\\d+)")) {
+            taxAllowance = Float.valueOf(code.getValue()) * 10.f;
+        }
+        if (income > taxAllowanceCap) {
+            taxAllowance -= (income - taxAllowanceCap) * 0.5f;
+            if (taxAllowance < 0) {
+                taxAllowance = 0.f;
+            }
+        }
+        return taxAllowance;
+    }
 }
