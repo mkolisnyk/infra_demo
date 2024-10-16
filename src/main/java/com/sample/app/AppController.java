@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@RequestMapping("api/v1")
 public class AppController {
+    private Engine engine = new Engine();
     @GetMapping("/ping")
     ResponseEntity<?> ping() {
         return ResponseEntity.ok().build();
@@ -22,7 +25,6 @@ public class AppController {
 
     @PostMapping("/tax")
     ResponseEntity<?> calculateTax(@RequestBody TaxRequest request) throws Exception {
-        Engine engine = new Engine();
         float income = request.getIncome();
         String code = request.getCode();
         if (code == null) {
@@ -36,7 +38,6 @@ public class AppController {
     }
     @PostMapping("/taxes")
     ResponseEntity<?> calculateTax(@RequestBody TaxRequest[] request) throws Exception {
-        Engine engine = new Engine();
         float totalTax = 0.f;
         float totalAllowance = 0.f;
         for (TaxRequest item : request) {
@@ -56,7 +57,6 @@ public class AppController {
     }
     @GetMapping("/rates/{code}")
     ResponseEntity<?> getRates(@PathVariable("code") String code) throws Exception {
-        Engine engine = new Engine();
         return ResponseEntity.ok(engine.getRates(code, 0.f));
     }
 }

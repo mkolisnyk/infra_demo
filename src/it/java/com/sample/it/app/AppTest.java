@@ -53,7 +53,7 @@ public class AppTest {
 
     @BeforeEach
     public void setUp() {
-        client = new AppClient("http://localhost:8080");
+        client = new AppClient("http://localhost:8080/api/v1");
     }
 
     @Test

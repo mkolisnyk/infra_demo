@@ -3,13 +3,14 @@ package com.sample.core;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sample.app.domain.RatesContainer;
 import com.sample.app.domain.TaxCode;
+import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
+@Service("engine")
 public class Engine {
 
     public float calculateTax(String code, float income) throws Exception {
