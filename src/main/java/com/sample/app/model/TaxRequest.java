@@ -3,6 +3,15 @@ package com.sample.app.model;
 public class TaxRequest {
     private float income;
     private String code;
+
+    public TaxRequest() {
+        super();
+    }
+    public TaxRequest(float incomeValue, String codeValue) {
+        this.income = incomeValue;
+        this.code = codeValue;
+    }
+
     public float getIncome() {
         return income;
     }

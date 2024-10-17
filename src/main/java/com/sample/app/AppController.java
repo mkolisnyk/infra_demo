@@ -1,6 +1,7 @@
 package com.sample.app;
 
 import com.sample.app.domain.TaxCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import com.sample.app.model.TaxRequest;
@@ -17,7 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1")
 public class AppController {
-    private Engine engine = new Engine();
+    @Autowired
+    private Engine engine;
+
+    public AppController(Engine engineObject) {
+        this.engine = engineObject;
+    }
+
     @GetMapping("/ping")
     ResponseEntity<?> ping() {
         return ResponseEntity.ok().build();
