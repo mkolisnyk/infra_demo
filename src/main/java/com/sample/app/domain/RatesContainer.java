@@ -1,12 +1,11 @@
 package com.sample.app.domain;
 
-
 import com.sample.core.Engine;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class RatesContainer {
+    private Engine engine = new Engine();
     private boolean useAllowance;
     private Map<String, String> rates;
 
@@ -33,7 +32,6 @@ public class RatesContainer {
         if (!this.isUseAllowance()) {
             return;
         }
-        Engine engine = new Engine();
         Float taxAllowance = engine.calculateAllowance(code, income);
 
         this.rates = new LinkedHashMap<String, String>();

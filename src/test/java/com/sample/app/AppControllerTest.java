@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -24,6 +25,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = {AppConfig.class})
@@ -71,6 +74,8 @@ public class AppControllerTest {
         Assertions.assertEquals(TaxCode.L, result.getCode());
         Assertions.assertEquals(12500.f, result.getAllowance());
         Assertions.assertEquals(19500.f, result.getTax());
+        verify(engine, times(1)).calculateTax(Mockito.anyString(), Mockito.anyFloat());
+        verify(engine, times(1)).calculateAllowance(Mockito.any(), Mockito.anyFloat());
     }
 
     @Test
@@ -97,6 +102,8 @@ public class AppControllerTest {
         Assertions.assertEquals(TaxCode.MULTIPLE, result.getCode());
         Assertions.assertEquals(22500.f, result.getAllowance());
         Assertions.assertEquals(13000.f, result.getTax());
+        verify(engine, times(3)).calculateTax(Mockito.anyString(), Mockito.anyFloat());
+        verify(engine, times(3)).calculateAllowance(Mockito.any(), Mockito.anyFloat());
     }
 
     @Test
@@ -120,5 +127,6 @@ public class AppControllerTest {
 
         Map<String, String> actual = objectMapper.readValue(response.getContentAsString(), LinkedHashMap.class);
         AssertEx.assertMapEqualsAsStringMap(rates, actual, "Get rates result is not as expected");
+        verify(engine, times(1)).getRates(Mockito.anyString(), Mockito.anyFloat());
     }
 }
