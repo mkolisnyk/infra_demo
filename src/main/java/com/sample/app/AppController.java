@@ -1,6 +1,8 @@
 package com.sample.app;
 
 import com.sample.app.domain.TaxCode;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1")
 public class AppController {
+    private static final Logger LOGGER = LogManager.getLogger(AppController.class);
     @Autowired
     private Engine engine;
 
@@ -37,6 +40,7 @@ public class AppController {
         if (code == null) {
             code = "1250L";
         }
+        LOGGER.info(String.format("Calculating tax for code %s and income %.2f", code, income));
         TaxResponse response = new TaxResponse();
         response.setTax(engine.calculateTax(code, income));
         response.setAllowance(engine.calculateAllowance(TaxCode.fromString(code), income));
@@ -45,6 +49,7 @@ public class AppController {
     }
     @PostMapping("/taxes")
     ResponseEntity<?> calculateTax(@RequestBody TaxRequest[] request) throws Exception {
+        LOGGER.info("Multiple tax calculation");
         float totalTax = 0.f;
         float totalAllowance = 0.f;
         for (TaxRequest item : request) {
@@ -64,6 +69,7 @@ public class AppController {
     }
     @GetMapping("/rates/{code}")
     ResponseEntity<?> getRates(@PathVariable("code") String code) throws Exception {
+        LOGGER.info(String.format("Retrieving rates for code %s", code));
         return ResponseEntity.ok(engine.getRates(code, 0.f));
     }
 }
