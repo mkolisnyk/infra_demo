@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Flow with approve
 
 on:
   workflow_dispatch:
