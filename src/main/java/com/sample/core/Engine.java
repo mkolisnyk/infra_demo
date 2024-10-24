@@ -26,7 +26,7 @@ public class Engine {
             float key = Float.valueOf(entry.getKey());
             float charge = (Math.min(key, income) - taxedAmount);
             tax += charge * Float.valueOf(entry.getValue());
-            taxedAmount -= charge;
+            taxedAmount += charge;
             if (income <= key) {
                 break;
             }
