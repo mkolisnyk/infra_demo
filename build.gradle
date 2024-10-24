@@ -86,6 +86,15 @@ test {
     finalizedBy jacocoTestReport
 }
 
+task integrationTest(type: Test) {
+    useJUnitPlatform {
+        includeEngines "junit-jupiter"
+        excludeEngines "junit-vintage"
+        testClassesDirs = testing.suites.test.sources.output.classesDirs + sourceSets.integration.output.classesDirs
+        classpath = testing.suites.test.sources.runtimeClasspath + sourceSets.integration.runtimeClasspath
+    }
+}
+
 jacocoTestReport {
     reports {
         html.outputLocation = layout.buildDirectory.dir('reports/tests/test/jacoco')
@@ -110,15 +119,6 @@ jacocoTestCoverageVerification {
             }
         }
    }
-}
-
-task integrationTest(type: Test) {
-    useJUnitPlatform {
-        includeEngines "junit-jupiter"
-        excludeEngines "junit-vintage"
-        testClassesDirs = testing.suites.test.sources.output.classesDirs + sourceSets.integration.output.classesDirs
-        classpath = testing.suites.test.sources.runtimeClasspath + sourceSets.integration.runtimeClasspath
-    }
 }
 
 checkstyle {
