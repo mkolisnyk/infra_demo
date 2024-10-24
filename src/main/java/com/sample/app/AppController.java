@@ -56,7 +56,7 @@ public class AppController {
             float income = item.getIncome();
             String code = item.getCode();
             if (code == null) {
-                code = "1200L";
+                code = "1250L";
             }
             totalTax += engine.calculateTax(code, income);
             totalAllowance += engine.calculateAllowance(TaxCode.fromString(code), income);
